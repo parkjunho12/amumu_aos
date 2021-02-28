@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="purple_200">#FFBB86FC</color>
+    <color name="purple_500">#FF6200EE</color>
+    <color name="purple_700">#FF3700B3</color>
+    <color name="teal_200">#FF03DAC5</color>
+    <color name="teal_700">#FF018786</color>
+    <color name="colorPrimary">#9013FE</color>
+    <color name="colorPrimaryDark">#9013FE</color>
+    <color name="colorAccent">#D81B60</color>
+    <color name="black">#000000</color>
+    <color name="cost">#181850</color>
+    <color name="priceColor">#9013FE</color>
+    <color name="titleColor">#141428</color>
+    <color name="closeButton">#181828</color>
+    <color name="white">#ffffff</color>
+    <color name="marketColor">#a3a3b5</color>
+    <color name="marketBackColor">#f6f6fa</color>
+    <color name="cardPriceColor">#ababc4</color>
+    <color name="view_colors">#99060606</color>
+    <color name="pink">#ff23ff</color>
+</resources>
