@@ -22,9 +22,7 @@ class MainViewModel(private val repository: MainRepository) : BaseViewModel(), K
     fun fetchDataList() {
         viewModelScope.launch(Dispatchers.IO) {
             _imageDataList.value?.add(ImageData(0, ""))
-            repository.loadImageDatas().forEach {
-                imageData -> _imageDataList.value?.add(imageData)
-            }
+            _imageDataList.postValue(repository.getAllImageList() as ArrayList<ImageData>?)
         }
     }
 

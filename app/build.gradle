@@ -89,17 +89,17 @@ dependencies {
 
     implementation "org.koin:koin-core:$koin_version"
 
-// Koin Extended & experimental features
+    // Koin Extended & experimental features
     implementation "org.koin:koin-core-ext:$koin_version"
 
-// Koin for Unit tests
+    // Koin for Unit tests
     testImplementation "org.koin:koin-test:$koin_version"
 
     // AndroidX Scope 생성 - 삭제 자동화
     implementation "org.koin:koin-androidx-scope:$koin_version"
-// AndroidX ViewModel
+    // AndroidX ViewModel
     implementation "org.koin:koin-androidx-viewmodel:$koin_version"
-// AndroidX Fragment
+    // AndroidX Fragment
     implementation "org.koin:koin-androidx-fragment:$koin_version"
 
     //Room Library
