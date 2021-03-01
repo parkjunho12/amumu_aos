@@ -7,8 +7,12 @@ import android.view.View
 import android.widget.Button
 import androidx.core.content.ContextCompat
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.junho.imageapp.R
+import com.junho.imageapp.database.format.ImageData
 import com.junho.imageapp.databinding.ActivityMainBinding
+import com.junho.imageapp.view.adapter.MainAdapter
 import com.junho.imageapp.viewmodel.MainViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -19,23 +23,28 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
         get() = R.layout.activity_main
 
     override val viewModel: MainViewModel by viewModel()
+    private lateinit var mRecyclerView: RecyclerView
+    private lateinit var gridLayoutManager: GridLayoutManager
+    private lateinit var mAdapter: MainAdapter
 
     override fun initStartView() {
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
-            window.statusBarColor =
-                ContextCompat.getColor(this@MainActivity, R.color.white)
-        }
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
-            window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
-        }
+        setStatusBar(this@MainActivity, R.color.white)
+        mRecyclerView =  findViewById<RecyclerView>(R.id.recyclerview_main)
+        gridLayoutManager = GridLayoutManager(applicationContext, 2)
+        mRecyclerView.layoutManager = gridLayoutManager
     }
 
     override fun initDataBinding() {
-
+        viewModel.imageDataList.observe(this, {
+            mAdapter = MainAdapter(this@MainActivity, it)
+            mRecyclerView.adapter = mAdapter
+            mRecyclerView.adapter!!.notifyDataSetChanged()
+        })
     }
 
     override fun initAfterBinding() {
         setNavigationDrawer()
+        viewModel.fetchDataList()
     }
 
 

@@ -1,6 +1,7 @@
 plugins {
     id 'com.android.application'
     id 'kotlin-android'
+    id 'kotlin-kapt'
 }
 
 android {
@@ -16,7 +17,13 @@ android {
         multiDexEnabled true
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments += ["room.schemaLocation": "$projectDir/schemas".toString()]
+            }
+        }
     }
+
 
     buildTypes {
         release {
@@ -94,4 +101,9 @@ dependencies {
     implementation "org.koin:koin-androidx-viewmodel:$koin_version"
 // AndroidX Fragment
     implementation "org.koin:koin-androidx-fragment:$koin_version"
+
+    //Room Library
+    implementation "androidx.room:room-runtime:2.3.0-beta02"
+    annotationProcessor "androidx.room:room-compiler:2.3.0-beta02"
+    kapt "androidx.room:room-compiler:2.3.0-beta02"
 }

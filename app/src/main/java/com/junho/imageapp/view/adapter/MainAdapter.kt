@@ -35,13 +35,16 @@ class MainAdapter(private val context: Context, private val itemList: ArrayList<
     }
 
     override fun onBindViewHolder(holder: Holder, position: Int) {
-        holder.bind(itemList[position])
-        if (itemClick != null){
-        holder.itemView.setOnClickListener { v ->
-            itemClick?.onClick(v, position)
+        if (position == 0) {
+            holder.firstImage()
+        } else {
+            holder.bind(itemList[position])
+            if (itemClick != null){
+                holder.itemView.setOnClickListener { v ->
+                    itemClick?.onClick(v, position)
 
-        }}
-
+                }}
+        }
     }
 
     inner class Holder(itemView: View?) : RecyclerView.ViewHolder(itemView!!) {
@@ -51,6 +54,14 @@ class MainAdapter(private val context: Context, private val itemList: ArrayList<
         fun bind (image: ImageData) {
 
 
+        }
+
+        fun firstImage() {
+            Glide.with(itemView)
+                .load(R.drawable.rounded_button)
+                .override(127,127)
+                .into(img!!)
+            title!!.text = "first"
         }
     }
 

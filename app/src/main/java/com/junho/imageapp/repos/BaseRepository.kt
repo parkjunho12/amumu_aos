@@ -1,4 +1,8 @@
 package com.junho.imageapp.repos
 
-class BaseRepository {
+import androidx.lifecycle.LiveData
+import com.junho.imageapp.database.format.ImageData
+
+interface BaseRepository {
+    fun loadImageDatas() : List<ImageData>
 }
