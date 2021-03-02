@@ -4,5 +4,5 @@ import androidx.lifecycle.LiveData
 import com.junho.imageapp.database.format.ImageData
 
 interface BaseRepository {
-    fun loadImageDatas() : List<ImageData>
+    suspend fun getAllImageList(): List<ImageData>
 }

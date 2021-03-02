@@ -12,7 +12,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-@Database(entities = [ImageData::class], version = 1)
+@Database(entities = [ImageData::class], version = 2)
 abstract class MainDataBase : RoomDatabase(){
     abstract fun imageDao(): ImageDao
 

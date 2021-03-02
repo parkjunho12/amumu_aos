@@ -6,6 +6,6 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "Images")
 data class ImageData(
-    @PrimaryKey(autoGenerate = true) val idx: Int,
+    @PrimaryKey(autoGenerate = true) val index: Int,
     @ColumnInfo val imageUri: String
 )
