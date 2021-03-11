@@ -8,6 +8,11 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import coil.Coil
+import coil.request.LoadRequest
+import coil.size.Scale
+import coil.transform.CircleCropTransformation
+import coil.transform.RoundedCornersTransformation
 import com.bumptech.glide.Glide
 import com.bumptech.glide.annotation.GlideModule
 import com.bumptech.glide.module.AppGlideModule
@@ -25,6 +30,11 @@ class MainAdapter(private val context: Context, private val itemList: ArrayList<
             view: View,
             position: Int
         )
+
+        fun onLongClick(
+            view: View,
+            position: Int
+        ) : Boolean
     }
 
 
@@ -38,31 +48,28 @@ class MainAdapter(private val context: Context, private val itemList: ArrayList<
     }
 
     override fun onBindViewHolder(holder: Holder, position: Int) {
-        if (position == 0) {
-            holder.firstImage(itemList[position])
-        } else {
-            holder.bind(itemList[position], position)
-        }
+        holder.bind(itemList[position], position)
         if (itemClick != null){
-            holder.itemView.setOnClickListener { v -> itemClick?.onClick(v, position) }}
+            holder.itemView.setOnLongClickListener { v -> itemClick?.onLongClick(v, position)!! }
+            holder.itemView.setOnClickListener { v -> itemClick?.onClick(v, position)!! }
+        }
     }
 
     inner class Holder(itemView: View?) : RecyclerView.ViewHolder(itemView!!) {
         private val img = itemView?.findViewById<ImageView>(R.id.img)
         private val index = itemView?.findViewById<TextView>(R.id.index_row)
         fun bind (image: ImageData, position: Int) {
-            index?.text = position.toString()
-            Glide.with(itemView)
-                .load(Uri.parse(image.imageUri))
-                .override(127,127)
-                .into(img!!)
-        }
 
-        fun firstImage(image: ImageData) {
-            Glide.with(itemView)
-                .load(Uri.parse(image.imageUri))
-                .override(127,127)
-                .into(img!!)
+            val imageLoader = Coil.imageLoader(itemView.context)
+            val request = LoadRequest.Companion.Builder(itemView.context)
+                .data(Uri.parse(image.imageUri))
+                .target(img!!)
+                .scale(Scale.FIT)
+                .placeholder(R.drawable.rounded_button)
+                .transformations(RoundedCornersTransformation(25f))
+                .build()
+            imageLoader.execute(request)
+            index?.text = (position+1).toString()
         }
     }
 

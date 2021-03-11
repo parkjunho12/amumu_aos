@@ -40,7 +40,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
             return@registerForActivityResult
         } else {
             val selectedImage = activityResult.data!!.data
-            val imageData= ImageData(index = viewModel.imageDataList.value!!.size + 1 ,imageUri = selectedImage.toString())
+            val imageData= ImageData(imageUri = selectedImage.toString())
             viewModel.insertImageData(imageData)
         }
     }
@@ -62,27 +62,23 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
     }
 
     override fun initDataBinding() {
-        viewModel.fetchDataList()
         viewModel.imageDataList.observe(this, {
             mAdapter = MainAdapter(this@MainActivity, it)
             mAdapter.itemClick = object : MainAdapter.ItemClick {
-                @SuppressLint("ResourceAsColor")
-                override fun onClick(
-                    view: View,
-                    position: Int
+                override fun onClick(view: View, position: Int) {
 
-                ) {
-                    if (position == 0) {
-                        Toast.makeText(view.context, "zero", Toast.LENGTH_LONG).show()
-                        pickFromGallery()
-                    } else {
-                        Toast.makeText(view.context, "after", Toast.LENGTH_LONG).show()
-                    }
                 }
+
+                override fun onLongClick(view: View, position: Int): Boolean {
+                    return true
+                }
+
+
             }
             mRecyclerView.adapter = mAdapter
             mRecyclerView.adapter!!.notifyDataSetChanged()
         })
+        viewModel.fetchDataList()
     }
 
     override fun initAfterBinding() {
@@ -109,6 +105,10 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
             } else {
                 drawerLayout.openDrawer(Gravity.RIGHT)
             }
+        }
+        val addButton = findViewById<Button>(R.id.btn_add_image)
+        addButton.setOnClickListener {
+            pickFromGallery()
         }
     }
 }

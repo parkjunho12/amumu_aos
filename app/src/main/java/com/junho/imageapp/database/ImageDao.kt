@@ -6,6 +6,7 @@ import com.junho.imageapp.database.format.ImageData
 
 @Dao
 interface ImageDao {
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAll(vararg image: ImageData)
 
