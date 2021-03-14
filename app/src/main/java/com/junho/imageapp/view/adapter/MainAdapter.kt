@@ -38,8 +38,7 @@ class MainAdapter(private val context: Context, private val itemList: ArrayList<
         ) : Boolean
 
         fun deleteItem(
-            view: View,
-            position: Int
+           image: ImageData
         )
     }
 
@@ -84,7 +83,7 @@ class MainAdapter(private val context: Context, private val itemList: ArrayList<
             index?.text = (position+1).toString()
             deleteBtn?.setOnClickListener {
                 itemList.remove(image)
-                itemClick?.deleteItem(it, position)
+                itemClick?.deleteItem(image)
                 notifyDataSetChanged()
             }
         }

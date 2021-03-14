@@ -74,8 +74,8 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
                     return true
                 }
 
-                override fun deleteItem(view: View, position: Int) {
-                    viewModel.deleteItem(position)
+                override fun deleteItem(imageData: ImageData) {
+                    viewModel.deleteItem(imageData)
                 }
             }
             mRecyclerView.adapter = mAdapter

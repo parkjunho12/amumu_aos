@@ -19,17 +19,20 @@ class CustomListLiveData(arrayList: ArrayList<ImageData>): MutableLiveData<Array
 
     suspend fun fetchData(repository: MainRepository) {
         withContext(Dispatchers.Main) {
-            value = repository.getAllImageList() as ArrayList<ImageData>?
+            imageArrayList = (repository.getAllImageList() as ArrayList<ImageData>?)!!
+            value = imageArrayList
         }
     }
 
     suspend fun addImage(repository: MainRepository, imageData: ImageData) {
         repository.insertImage(imageData)
-        fetchData(repository)
+        imageArrayList.add(imageData)
+        value = imageArrayList
     }
 
     suspend fun deleteImage(repository: MainRepository, imageData: ImageData) {
         repository.deleteImage(imageData)
-        fetchData(repository)
+        imageArrayList.remove(imageData)
+        value = imageArrayList
     }
 }

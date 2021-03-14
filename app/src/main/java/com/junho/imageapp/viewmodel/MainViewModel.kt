@@ -34,9 +34,9 @@ class MainViewModel(private val repository: MainRepository) : BaseViewModel(), K
         super.onCleared()
     }
 
-    fun deleteItem(position: Int) {
+    fun deleteItem(imageData: ImageData) {
         viewModelScope.launch(Dispatchers.IO) {
-            _imageDataList.deleteImage(repository, _imageDataList.value?.get(position)!!)
+            _imageDataList.deleteImage(repository, imageData)
         }
     }
 }
