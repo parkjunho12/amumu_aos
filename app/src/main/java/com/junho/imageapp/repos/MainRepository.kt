@@ -19,6 +19,7 @@ interface MainRepository : BaseRepository{
     override suspend fun getAllImageList(): List<ImageData>
 
     suspend fun insertImage(imageData: ImageData)
+    fun deleteImage(imageData: ImageData)
 }
 
 class MainRepositoryImpl(private val context: Context, private val imageDao: ImageDao):
@@ -31,6 +32,10 @@ class MainRepositoryImpl(private val context: Context, private val imageDao: Ima
 
     override suspend fun insertImage(imageData: ImageData) {
         imageDao.insertAll(imageData)
+    }
+
+    override fun deleteImage(imageData: ImageData) {
+        imageDao.delete(imageData)
     }
 
 }

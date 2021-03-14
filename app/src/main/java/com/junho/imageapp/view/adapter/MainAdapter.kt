@@ -5,6 +5,7 @@ import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
@@ -35,6 +36,11 @@ class MainAdapter(private val context: Context, private val itemList: ArrayList<
             view: View,
             position: Int
         ) : Boolean
+
+        fun deleteItem(
+            view: View,
+            position: Int
+        )
     }
 
 
@@ -55,9 +61,15 @@ class MainAdapter(private val context: Context, private val itemList: ArrayList<
         }
     }
 
+    fun toggleDeleteButton() {
+
+    }
+
+
     inner class Holder(itemView: View?) : RecyclerView.ViewHolder(itemView!!) {
         private val img = itemView?.findViewById<ImageView>(R.id.img)
         private val index = itemView?.findViewById<TextView>(R.id.index_row)
+        private val deleteBtn = itemView?.findViewById<Button>(R.id.btn_delete)
         fun bind (image: ImageData, position: Int) {
 
             val imageLoader = Coil.imageLoader(itemView.context)
@@ -70,7 +82,13 @@ class MainAdapter(private val context: Context, private val itemList: ArrayList<
                 .build()
             imageLoader.execute(request)
             index?.text = (position+1).toString()
+            deleteBtn?.setOnClickListener {
+                itemList.remove(image)
+                itemClick?.deleteItem(it, position)
+                notifyDataSetChanged()
+            }
         }
+
     }
 
 }

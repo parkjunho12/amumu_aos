@@ -70,10 +70,13 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
                 }
 
                 override fun onLongClick(view: View, position: Int): Boolean {
+
                     return true
                 }
 
-
+                override fun deleteItem(view: View, position: Int) {
+                    viewModel.deleteItem(position)
+                }
             }
             mRecyclerView.adapter = mAdapter
             mRecyclerView.adapter!!.notifyDataSetChanged()

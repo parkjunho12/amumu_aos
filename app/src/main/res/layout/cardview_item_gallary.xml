@@ -6,6 +6,20 @@
     android:layout_margin="15dp"
     cardView:cardElevation="3dp"
     xmlns:cardView="http://schemas.android.com/apk/res-auto">
+    <Button
+        android:id="@+id/btn_delete"
+        android:fontFamily="@font/notoblack"
+        android:textSize="14sp"
+        android:text="X"
+        android:textColor="@color/white"
+        android:layout_gravity="end|top"
+        android:padding="3dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginBottom="15dp"
+        android:background="@color/black"
+        android:includeFontPadding="false"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
     <ImageView
         android:id="@+id/img"
         android:layout_width="match_parent"
