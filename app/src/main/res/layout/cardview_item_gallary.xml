@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="130dp"
+    android:layout_width="150dp"
+    android:layout_height="150dp"
     android:layout_margin="15dp"
     cardView:cardElevation="3dp"
     xmlns:cardView="http://schemas.android.com/apk/res-auto">

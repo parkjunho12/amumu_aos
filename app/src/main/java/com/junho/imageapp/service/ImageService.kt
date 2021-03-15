@@ -31,7 +31,6 @@ class ImageService: LifecycleService() {
         super.onStartCommand(intent, flags, startId)
         imageList = intent!!.getSerializableExtra("imageDataList") as ArrayList<ImageData>
         remoteViews = RemoteViews(packageName, R.layout.noti_view)
-        remoteViews.setImageViewUri(R.id.first_image, Uri.parse(imageList[0].imageUri))
         isInit = true
         makeWidget()
         return START_STICKY
@@ -39,6 +38,16 @@ class ImageService: LifecycleService() {
 
     private fun makeWidget() {
         val appName = "Image 서비스"
+        if (imageList.size > 3) {
+            remoteViews.setImageViewUri(R.id.first_image, Uri.parse(imageList[0].imageUri))
+            remoteViews.setImageViewUri(R.id.second_image, Uri.parse(imageList[1].imageUri))
+            remoteViews.setImageViewUri(R.id.third_image, Uri.parse(imageList[2].imageUri))
+        } else if (imageList.size == 2){
+            remoteViews.setImageViewUri(R.id.first_image, Uri.parse(imageList[0].imageUri))
+            remoteViews.setImageViewUri(R.id.second_image, Uri.parse(imageList[1].imageUri))
+        } else if (imageList.size == 1) {
+            remoteViews.setImageViewUri(R.id.first_image, Uri.parse(imageList[0].imageUri))
+        }
         if (Build.VERSION.SDK_INT >= 26) {
 
             builder = NotificationCompat.Builder(this, CHANNEL_ID)

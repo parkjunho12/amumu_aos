@@ -118,6 +118,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
         addButton.setOnClickListener {
             pickFromGallery()
         }
+        switchNoti.isChecked = ImageService.isInit
         switchNoti.setOnCheckedChangeListener { _, isChecked ->
             val imageservice = Intent(this, ImageService::class.java)
             imageservice.putExtra("imageDataList", viewModel.imageDataList.value)
