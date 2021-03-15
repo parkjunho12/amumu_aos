@@ -3,10 +3,11 @@ package com.junho.imageapp.view
 import android.Manifest
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.os.Build
 import android.view.Gravity
 import android.view.View
 import android.widget.Button
-import android.widget.Toast
+import android.widget.Switch
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.drawerlayout.widget.DrawerLayout
@@ -15,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.junho.imageapp.R
 import com.junho.imageapp.database.format.ImageData
 import com.junho.imageapp.databinding.ActivityMainBinding
+import com.junho.imageapp.service.ImageService
 import com.junho.imageapp.view.adapter.MainAdapter
 import com.junho.imageapp.viewmodel.MainViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -32,6 +34,8 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
     private lateinit var mRecyclerView: RecyclerView
     private lateinit var gridLayoutManager: GridLayoutManager
     private lateinit var mAdapter: MainAdapter
+    @SuppressLint("UseSwitchCompatOrMaterialCode")
+    private lateinit var switchNoti: Switch
     private val requestActivity: ActivityResultLauncher<Intent> = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult() // ◀ StartActivityForResult 처리를 담당
     ) { activityResult ->
@@ -58,6 +62,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
         setStatusBar(this@MainActivity, R.color.white)
         mRecyclerView =  findViewById<RecyclerView>(R.id.recyclerview_main)
         gridLayoutManager = GridLayoutManager(applicationContext, 2)
+        switchNoti = findViewById(R.id.switch_noti)
         mRecyclerView.layoutManager = gridLayoutManager
     }
 
@@ -74,8 +79,8 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
                     return true
                 }
 
-                override fun deleteItem(imageData: ImageData) {
-                    viewModel.deleteItem(imageData)
+                override fun deleteItem(image: ImageData) {
+                    viewModel.deleteItem(image)
                 }
             }
             mRecyclerView.adapter = mAdapter
@@ -112,6 +117,25 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
         val addButton = findViewById<Button>(R.id.btn_add_image)
         addButton.setOnClickListener {
             pickFromGallery()
+        }
+        switchNoti.setOnCheckedChangeListener { _, isChecked ->
+            val imageservice = Intent(this, ImageService::class.java)
+            imageservice.putExtra("imageDataList", viewModel.imageDataList.value)
+            if (isChecked) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    if (!ImageService.isInit) {
+                        startForegroundService(imageservice)
+                    }
+                } else {
+                    if (!ImageService.isInit) {
+                        startService(imageservice)
+                    }
+                }
+            } else {
+                if (ImageService.isInit) {
+                    stopService(imageservice)
+                }
+            }
         }
     }
 }
