@@ -6,21 +6,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import coil.Coil
 import coil.request.LoadRequest
 import coil.size.Scale
-import coil.transform.CircleCropTransformation
 import coil.transform.RoundedCornersTransformation
-import com.bumptech.glide.Glide
-import com.bumptech.glide.annotation.GlideModule
-import com.bumptech.glide.module.AppGlideModule
 import com.junho.imageapp.R
 import com.junho.imageapp.database.format.ImageData
 
-@GlideModule
 class MainAdapter(private val context: Context, private val itemList: ArrayList<ImageData>):
         RecyclerView.Adapter<MainAdapter.Holder>(){
 
@@ -68,7 +64,7 @@ class MainAdapter(private val context: Context, private val itemList: ArrayList<
     inner class Holder(itemView: View?) : RecyclerView.ViewHolder(itemView!!) {
         private val img = itemView?.findViewById<ImageView>(R.id.img)
         private val index = itemView?.findViewById<TextView>(R.id.index_row)
-        private val deleteBtn = itemView?.findViewById<Button>(R.id.btn_delete)
+        private val deleteBtn = itemView?.findViewById<ImageButton>(R.id.btn_delete)
         fun bind (image: ImageData, position: Int) {
 
             val imageLoader = Coil.imageLoader(itemView.context)
@@ -76,7 +72,6 @@ class MainAdapter(private val context: Context, private val itemList: ArrayList<
                 .data(Uri.parse(image.imageUri))
                 .target(img!!)
                 .scale(Scale.FIT)
-                .placeholder(R.drawable.rounded_button)
                 .transformations(RoundedCornersTransformation(25f))
                 .build()
             imageLoader.execute(request)

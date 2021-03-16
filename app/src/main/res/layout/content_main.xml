@@ -12,10 +12,14 @@
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:gravity="end"
-        android:layout_height="50dp">
-        <Button
+        android:layout_height="wrap_content">
+        <ImageButton
             android:id="@+id/menu_button"
-            android:text="버튼"
+            android:src="@drawable/ic_baseline_info_24"
+            android:layout_gravity="end"
+            android:scaleX="1.5"
+            android:scaleY="1.5"
+            android:backgroundTint="@android:color/transparent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
     </LinearLayout>
@@ -30,10 +34,11 @@
         tools:ignore="UseSwitchCompatOrMaterialXml" />
 
     <ScrollView
-        android:layout_marginBottom="20dp"
         app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
         app:layout_constraintTop_toBottomOf="@id/switch_noti"
-        app:layout_constraintBottom_toTopOf="@id/btn_add_image"
+        app:layout_constraintBottom_toTopOf="@id/banner"
         android:layout_width="match_parent"
         android:layout_height="0dp">
         <androidx.recyclerview.widget.RecyclerView
@@ -42,7 +47,10 @@
             android:layout_height="wrap_content"/>
     </ScrollView>
     <Button
+        android:background="@drawable/plus_button_rounded"
         app:layout_constraintBottom_toTopOf="@id/banner"
+        android:textColor="@color/white"
+        android:fontFamily="@font/notobold"
         android:id="@+id/btn_add_image"
         android:text="사진을 추가해 주세요."
         android:layout_width="match_parent"

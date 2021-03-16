@@ -38,7 +38,7 @@ class ImageService: LifecycleService() {
 
     private fun makeWidget() {
         val appName = "Image 서비스"
-        if (imageList.size > 3) {
+        if (imageList.size >= 3) {
             remoteViews.setImageViewUri(R.id.first_image, Uri.parse(imageList[0].imageUri))
             remoteViews.setImageViewUri(R.id.second_image, Uri.parse(imageList[1].imageUri))
             remoteViews.setImageViewUri(R.id.third_image, Uri.parse(imageList[2].imageUri))

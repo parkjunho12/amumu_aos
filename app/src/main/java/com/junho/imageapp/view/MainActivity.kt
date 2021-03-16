@@ -7,6 +7,7 @@ import android.os.Build
 import android.view.Gravity
 import android.view.View
 import android.widget.Button
+import android.widget.ImageButton
 import android.widget.Switch
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
@@ -59,7 +60,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
 
 
     override fun initStartView() {
-        setStatusBar(this@MainActivity, R.color.white)
+        setStatusBar(this@MainActivity, R.color.colorPrimary)
         mRecyclerView =  findViewById<RecyclerView>(R.id.recyclerview_main)
         gridLayoutManager = GridLayoutManager(applicationContext, 2)
         switchNoti = findViewById(R.id.switch_noti)
@@ -106,7 +107,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
     private fun setNavigationDrawer() {
         val drawerLayout = findViewById<DrawerLayout>(R.id.drawerLayout)
 
-        val button = findViewById<Button>(R.id.menu_button)
+        val button = findViewById<ImageButton>(R.id.menu_button)
         button.setOnClickListener {
             if (drawerLayout.isDrawerOpen(Gravity.RIGHT)) {
                 drawerLayout.closeDrawer(Gravity.RIGHT)
@@ -122,7 +123,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
         switchNoti.setOnCheckedChangeListener { _, isChecked ->
             val imageservice = Intent(this, ImageService::class.java)
             imageservice.putExtra("imageDataList", viewModel.imageDataList.value)
-            if (isChecked) {
+             if (isChecked) {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                     if (!ImageService.isInit) {
                         startForegroundService(imageservice)
