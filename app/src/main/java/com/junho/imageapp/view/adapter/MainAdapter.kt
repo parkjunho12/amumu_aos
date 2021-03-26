@@ -16,6 +16,7 @@ import coil.size.Scale
 import coil.transform.RoundedCornersTransformation
 import com.junho.imageapp.R
 import com.junho.imageapp.database.format.ImageData
+import com.squareup.picasso.Picasso
 
 class MainAdapter(private val context: Context, private val itemList: ArrayList<ImageData>):
         RecyclerView.Adapter<MainAdapter.Holder>(){
@@ -75,6 +76,7 @@ class MainAdapter(private val context: Context, private val itemList: ArrayList<
                 .transformations(RoundedCornersTransformation(25f))
                 .build()
             imageLoader.execute(request)
+
             index?.text = (position+1).toString()
             deleteBtn?.setOnClickListener {
                 itemList.remove(image)

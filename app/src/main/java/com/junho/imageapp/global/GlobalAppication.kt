@@ -4,6 +4,7 @@ import android.app.Application
 import com.junho.imageapp.di.ViewModelModule
 import com.junho.imageapp.di.dataModule
 import com.junho.imageapp.di.roomDBModule
+import com.junho.imageapp.service.ImageService
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidFileProperties
 import org.koin.android.ext.koin.androidLogger
@@ -27,5 +28,8 @@ class GlobalAppication: Application() {
     override fun onTerminate() {
 
         super.onTerminate()
+    }
+
+    companion object {
     }
 }

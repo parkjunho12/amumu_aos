@@ -4,9 +4,11 @@ import android.Manifest
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Build
+import android.util.DisplayMetrics
 import android.view.Gravity
 import android.view.View
 import android.widget.Button
+import android.widget.FrameLayout
 import android.widget.ImageButton
 import android.widget.Switch
 import androidx.activity.result.ActivityResultLauncher
@@ -14,6 +16,8 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.gms.ads.*
+import com.junho.imageapp.BuildConfig
 import com.junho.imageapp.R
 import com.junho.imageapp.database.format.ImageData
 import com.junho.imageapp.databinding.ActivityMainBinding
@@ -31,10 +35,29 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
     override val layoutResourceId: Int
         get() = R.layout.activity_main
 
+    private val adSize: AdSize
+        get() {
+            val display = windowManager.defaultDisplay
+            val outMetrics = DisplayMetrics()
+            display.getMetrics(outMetrics)
+
+            val density = outMetrics.density
+
+            var adWidthPixels = findViewById<FrameLayout>(R.id.ad_view_container).width.toFloat()
+            if (adWidthPixels == 0f) {
+                adWidthPixels = outMetrics.widthPixels.toFloat()
+            }
+
+            val adWidth = (adWidthPixels / density).toInt()
+            return AdSize.getCurrentOrientationAnchoredAdaptiveBannerAdSize(this, adWidth)
+        }
+
     override val viewModel: MainViewModel by viewModel()
     private lateinit var mRecyclerView: RecyclerView
     private lateinit var gridLayoutManager: GridLayoutManager
     private lateinit var mAdapter: MainAdapter
+    private lateinit var mAdView: AdView
+    private var initialLayoutComplete = false
     @SuppressLint("UseSwitchCompatOrMaterialCode")
     private lateinit var switchNoti: Switch
     private val requestActivity: ActivityResultLauncher<Intent> = registerForActivityResult(
@@ -65,9 +88,44 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
         gridLayoutManager = GridLayoutManager(applicationContext, 2)
         switchNoti = findViewById(R.id.switch_noti)
         mRecyclerView.layoutManager = gridLayoutManager
+        MobileAds.initialize(this) {}
+
+        MobileAds.setRequestConfiguration(
+            RequestConfiguration.Builder()
+                .setTestDeviceIds(listOf("ABCDEF012345"))
+                .build()
+        )
+
+        mAdView = AdView(this)
+        val viewContainer = findViewById<FrameLayout>(R.id.ad_view_container)
+        viewContainer.addView(mAdView)
+        viewContainer.viewTreeObserver.addOnGlobalLayoutListener {
+            if (!initialLayoutComplete) {
+                initialLayoutComplete = true
+                loadBanner()
+            }
+        }
+    }
+
+
+    private fun loadBanner() {
+        mAdView.adUnitId = if (BuildConfig.DEBUG)  {
+            AD_UNIT_ID
+        } else {
+            AD_REAL_ID
+        }
+
+        mAdView.adSize = adSize
+
+        // Create an ad request.
+        val adRequest = AdRequest.Builder().build()
+
+        // Start loading the ad in the background.
+        mAdView.loadAd(adRequest)
     }
 
     override fun initDataBinding() {
+        mAdapter = MainAdapter(this@MainActivity, viewModel.imageDataList.value!!)
         viewModel.imageDataList.observe(this, {
             mAdapter = MainAdapter(this@MainActivity, it)
             mAdapter.itemClick = object : MainAdapter.ItemClick {
@@ -139,5 +197,11 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
                 }
             }
         }
+    }
+
+    companion object {
+        // This is an ad unit ID for a test ad. Replace with your own banner ad unit ID.
+        private val AD_UNIT_ID = "ca-app-pub-3940256099942544/9214589741"
+        private val AD_REAL_ID = "ca-app-pub-7696719602071323/3929623024"
     }
 }

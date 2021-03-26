@@ -13,6 +13,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar.Application">
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="ca-app-pub-7696719602071323~6747358051"/>
         <activity android:name=".view.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -23,6 +26,9 @@
         <service android:name=".service.ImageService"
             android:enabled="true"
             android:exported="false"
+            />
+        <receiver
+            android:name=".receiver.AlarmReceiver"
             />
     </application>
 
