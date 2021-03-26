@@ -25,7 +25,7 @@
     </LinearLayout>
     <Switch
         android:id="@+id/switch_noti"
-        android:text="상단 상태바에 나의 이미지를 노출시키기"
+        android:text="@string/switch_info"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/top_lin"
@@ -52,7 +52,7 @@
         android:textColor="@color/white"
         android:fontFamily="@font/notobold"
         android:id="@+id/btn_add_image"
-        android:text="사진을 추가해 주세요."
+        android:text="@string/add_image"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 

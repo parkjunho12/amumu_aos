@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">ImageApp</string>
+    <string name="support">Support</string>
+    <string name="how">How to use?</string>
+    <string name="app_version">App Version</string>
+    <string name="switch_info">Expose my image on the top status bar</string>
+    <string name="add_image">Please add a picture.</string>
+</resources>
