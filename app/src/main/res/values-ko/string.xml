@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">ImageApp</string>
+    <string name="app_name">랜덤 상태창 이미지</string>
     <string name="support">고객지원</string>
     <string name="how">사용방법</string>
     <string name="app_version">앱 버젼</string>

@@ -107,9 +107,9 @@ class ImageService: LifecycleService() {
 
         } else if (imageList.size == 2){
             remoteViews.setImageViewUri(R.id.first_image, Uri.parse(imageList[0].imageUri))
-            remoteViews.setImageViewUri(R.id.second_image, Uri.parse(imageList[1].imageUri))
+            remoteViews.setImageViewUri(R.id.third_image, Uri.parse(imageList[1].imageUri))
         } else if (imageList.size == 1) {
-            remoteViews.setImageViewUri(R.id.first_image, Uri.parse(imageList[0].imageUri))
+            remoteViews.setImageViewUri(R.id.second_image, Uri.parse(imageList[0].imageUri))
         }
 
     }

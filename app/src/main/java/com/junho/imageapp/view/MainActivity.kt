@@ -67,9 +67,11 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
         if (activityResult == null) {
             return@registerForActivityResult
         } else {
-            val selectedImage = activityResult.data!!.data
-            val imageData= ImageData(imageUri = selectedImage.toString())
-            viewModel.insertImageData(imageData)
+            if (activityResult.data != null) {
+                val selectedImage = activityResult.data!!.data
+                val imageData= ImageData(imageUri = selectedImage.toString())
+                viewModel.insertImageData(imageData)
+            }
         }
     }
     private val requestPermission = registerForActivityResult(ActivityResultContracts.RequestPermission()) {

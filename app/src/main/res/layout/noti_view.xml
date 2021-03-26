@@ -9,24 +9,24 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <ImageView
+            android:background="@drawable/rounded_noti_image"
             android:id="@+id/first_image"
             android:scaleType="fitXY"
-            android:padding="5dp"
             android:layout_margin="5dp"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="match_parent"/>
         <ImageView
             android:id="@+id/second_image"
+            android:background="@drawable/rounded_noti_image"
             android:scaleType="fitXY"
-            android:padding="5dp"
             android:layout_margin="5dp"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="match_parent"/>
         <ImageView
-            android:padding="5dp"
             android:layout_margin="5dp"
+            android:background="@drawable/rounded_noti_image"
             android:id="@+id/third_image"
             android:scaleType="fitXY"
             android:layout_width="0dp"
