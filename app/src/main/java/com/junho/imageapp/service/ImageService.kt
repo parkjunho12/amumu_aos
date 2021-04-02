@@ -61,14 +61,14 @@ class ImageService: LifecycleService() {
         // Set the alarm to start at 8:30 a.m.
         val calendar: Calendar = Calendar.getInstance().apply {
             timeInMillis = System.currentTimeMillis()
-            set(Calendar.MINUTE, get(Calendar.MINUTE) + 15)
+            set(Calendar.MINUTE, get(Calendar.MINUTE) + 1)
 
         }
 
         // setRepeating() lets you specify a precise custom interval--in this case,
         // 20 minutes.
         alarmMgr?.setRepeating(
-            AlarmManager.RTC_WAKEUP,
+            AlarmManager.RTC,
             calendar.timeInMillis ,
             INTERVAL_FIFTEEN_MINUTES,
             alarmIntent
