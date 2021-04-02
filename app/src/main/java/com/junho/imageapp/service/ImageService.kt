@@ -74,7 +74,7 @@ class ImageService: LifecycleService(), LifecycleObserver {
         // Set the alarm to start at 8:30 a.m.
         val calendar: Calendar = Calendar.getInstance().apply {
             timeInMillis = System.currentTimeMillis()
-            set(Calendar.MINUTE, get(Calendar.MINUTE) + 1)
+            set(Calendar.MINUTE, get(Calendar.MINUTE) + 15)
 
         }
 
