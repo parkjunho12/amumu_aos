@@ -13,16 +13,23 @@ import android.util.Log
 import android.widget.RemoteViews
 import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat.getSystemService
+import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.LifecycleService
+import androidx.lifecycle.LiveData
 import com.junho.imageapp.R
 import com.junho.imageapp.common.CommonConst.CHANNEL_ID
+import com.junho.imageapp.common.CustomListLiveData
 import com.junho.imageapp.database.format.ImageData
 import com.junho.imageapp.receiver.AlarmReceiver
+import com.junho.imageapp.repos.MainRepository
 import com.junho.imageapp.view.MainActivity
+import com.junho.imageapp.viewmodel.MainViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.component.KoinApiExtension
 import java.util.*
 import kotlin.collections.ArrayList
@@ -30,20 +37,26 @@ import kotlin.collections.HashMap
 import kotlin.collections.HashSet
 
 @KoinApiExtension
-class ImageService: LifecycleService() {
+class ImageService: LifecycleService(), LifecycleObserver {
     private lateinit var remoteViews: RemoteViews
     private lateinit var builder: NotificationCompat.Builder
-    private lateinit var imageList: ArrayList<ImageData>
+    lateinit var imageList: ArrayList<ImageData>
     private var alarmMgr: AlarmManager? = null
     private lateinit var alarmIntent: PendingIntent
     lateinit var mContext: Context
     private var mBound: Boolean = false
+    val mainRepository: MainRepository by inject()
+
+
 
     private val binder = MainBinder()
     inner class MainBinder : Binder() {
         fun getService(): ImageService = this@ImageService
     }
     override fun onCreate() {
+        CoroutineScope(Dispatchers.IO).launch {
+            imageList = (mainRepository.getAllImageList() as ArrayList<ImageData>?)!!
+        }
         super.onCreate()
     }
 

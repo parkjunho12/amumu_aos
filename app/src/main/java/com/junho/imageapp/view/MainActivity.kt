@@ -2,8 +2,12 @@ package com.junho.imageapp.view
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.content.ComponentName
+import android.content.Context
 import android.content.Intent
+import android.content.ServiceConnection
 import android.os.Build
+import android.os.IBinder
 import android.util.DisplayMetrics
 import android.view.Gravity
 import android.view.View
@@ -14,6 +18,7 @@ import android.widget.Switch
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.gms.ads.*
@@ -51,6 +56,21 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
             val adWidth = (adWidthPixels / density).toInt()
             return AdSize.getCurrentOrientationAnchoredAdaptiveBannerAdSize(this, adWidth)
         }
+    private lateinit var mService: ImageService
+    private var mBound: Boolean = false
+    private val mainConnection = object : ServiceConnection {
+        override fun onServiceDisconnected(name: ComponentName?) {
+
+        }
+
+        override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
+
+            val binder = service as ImageService.MainBinder
+            mService = binder.getService()
+            mService.imageList = viewModel.imageDataList.value!!
+        }
+
+    }
 
     override val viewModel: MainViewModel by viewModel()
     private lateinit var mRecyclerView: RecyclerView
@@ -193,6 +213,9 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
                         startService(imageservice)
                     }
                 }
+                 Intent(this, ImageService::class.java).also {
+                         intent -> bindService(intent, mainConnection, Context.BIND_AUTO_CREATE)
+                 }
             } else {
                 if (ImageService.isInit) {
                     stopService(imageservice)

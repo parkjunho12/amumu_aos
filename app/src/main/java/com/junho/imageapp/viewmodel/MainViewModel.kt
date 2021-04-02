@@ -1,9 +1,13 @@
 package com.junho.imageapp.viewmodel
 
+import android.content.ComponentName
+import android.content.ServiceConnection
+import android.os.IBinder
 import androidx.lifecycle.*
 import com.junho.imageapp.common.CustomListLiveData
 import com.junho.imageapp.database.format.ImageData
 import com.junho.imageapp.repos.MainRepository
+import com.junho.imageapp.service.ImageService
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.koin.core.component.KoinApiExtension
