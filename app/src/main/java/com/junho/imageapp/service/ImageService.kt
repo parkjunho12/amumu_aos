@@ -202,6 +202,7 @@ class ImageService: LifecycleService(), LifecycleObserver {
     override fun onDestroy() {
         isInit = false
         alarmMgr?.cancel(alarmIntent)
+        stopSelf()
         super.onDestroy()
     }
 
