@@ -103,28 +103,41 @@ class ImageService: LifecycleService(), LifecycleObserver {
     }
 
     private fun makeRemoteViews() {
-        if (imageList.size >= 3) {
-            var imageQueue: HashSet<Int> = java.util.HashSet()
-            while (true) {
-                imageQueue =  makeRandThreeNum(imageList.size, imageQueue)
-                if (imageQueue.size == 3) break
-            }
+        CoroutineScope(Dispatchers.IO).launch {
+            imageList = (mainRepository.getAllImageList() as ArrayList<ImageData>?)!!
+            withContext(Dispatchers.Main) {
+                if (imageList.size >= 3) {
+                    var imageQueue: HashSet<Int> = java.util.HashSet()
+                    while (true) {
+                        imageQueue = makeRandThreeNum(imageList.size, imageQueue)
+                        if (imageQueue.size == 3) break
+                    }
 
-            val imageArray = imageQueue.toArray()
-            for (image in imageArray) {
-                Log.d("image", image.toString())
-            }
-            remoteViews.setImageViewUri(R.id.first_image, Uri.parse(imageList[imageArray[0] as Int].imageUri))
-            remoteViews.setImageViewUri(R.id.second_image, Uri.parse(imageList[imageArray[1] as Int].imageUri))
-            remoteViews.setImageViewUri(R.id.third_image, Uri.parse(imageList[imageArray[2] as Int].imageUri))
+                    val imageArray = imageQueue.toArray()
+                    for (image in imageArray) {
+                        Log.d("image", image.toString())
+                    }
+                    remoteViews.setImageViewUri(
+                        R.id.first_image,
+                        Uri.parse(imageList[imageArray[0] as Int].imageUri)
+                    )
+                    remoteViews.setImageViewUri(
+                        R.id.second_image,
+                        Uri.parse(imageList[imageArray[1] as Int].imageUri)
+                    )
+                    remoteViews.setImageViewUri(
+                        R.id.third_image,
+                        Uri.parse(imageList[imageArray[2] as Int].imageUri)
+                    )
 
-        } else if (imageList.size == 2){
-            remoteViews.setImageViewUri(R.id.first_image, Uri.parse(imageList[0].imageUri))
-            remoteViews.setImageViewUri(R.id.third_image, Uri.parse(imageList[1].imageUri))
-        } else if (imageList.size == 1) {
-            remoteViews.setImageViewUri(R.id.second_image, Uri.parse(imageList[0].imageUri))
+                } else if (imageList.size == 2) {
+                    remoteViews.setImageViewUri(R.id.first_image, Uri.parse(imageList[0].imageUri))
+                    remoteViews.setImageViewUri(R.id.third_image, Uri.parse(imageList[1].imageUri))
+                } else if (imageList.size == 1) {
+                    remoteViews.setImageViewUri(R.id.second_image, Uri.parse(imageList[0].imageUri))
+                }
+            }
         }
-
     }
 
     fun refreshImage() {
