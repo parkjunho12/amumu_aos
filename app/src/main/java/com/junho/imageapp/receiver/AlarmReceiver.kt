@@ -1,7 +1,9 @@
 package com.junho.imageapp.receiver
 
 import android.content.*
+import android.os.Handler
 import android.os.IBinder
+import android.os.Looper
 import com.junho.imageapp.global.GlobalAppication
 import com.junho.imageapp.service.ImageService
 
@@ -17,6 +19,8 @@ class AlarmReceiver: BroadcastReceiver() {
             val binder = service as ImageService.MainBinder
             mService = binder.getService()
             mService.refreshImage()
+
+
         }
 
     }
@@ -25,6 +29,9 @@ class AlarmReceiver: BroadcastReceiver() {
         Intent(context, ImageService::class.java).also {
                 intent -> context!!.applicationContext.bindService(intent, mainConnection, Context.BIND_AUTO_CREATE)
         }
-
+        Handler(Looper.getMainLooper()).postDelayed(
+            Runnable {  context!!.applicationContext.unbindService(mainConnection) }, 3000
+        )
     }
+
 }

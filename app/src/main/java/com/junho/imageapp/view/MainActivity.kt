@@ -26,6 +26,7 @@ import com.junho.imageapp.BuildConfig
 import com.junho.imageapp.R
 import com.junho.imageapp.database.format.ImageData
 import com.junho.imageapp.databinding.ActivityMainBinding
+import com.junho.imageapp.global.GlobalAppication
 import com.junho.imageapp.service.ImageService
 import com.junho.imageapp.view.adapter.MainAdapter
 import com.junho.imageapp.viewmodel.MainViewModel
@@ -60,7 +61,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
     private var mBound: Boolean = false
     private val mainConnection = object : ServiceConnection {
         override fun onServiceDisconnected(name: ComponentName?) {
-
+            mBound = false
         }
 
         override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
@@ -68,6 +69,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
             val binder = service as ImageService.MainBinder
             mService = binder.getService()
             mService.imageList = viewModel.imageDataList.value!!
+            mBound = true
         }
 
     }
@@ -201,7 +203,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
         }
         switchNoti.isChecked = ImageService.isInit
         switchNoti.setOnCheckedChangeListener { _, isChecked ->
-            val imageservice = Intent(this, ImageService::class.java)
+            val imageservice = Intent(this, GlobalAppication.imageService::class.java)
             imageservice.putExtra("imageDataList", viewModel.imageDataList.value)
              if (isChecked) {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -218,6 +220,9 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
                  }
             } else {
                 if (ImageService.isInit) {
+                    if (mBound) {
+                        unbindService(mainConnection)
+                    }
                     stopService(imageservice)
                 }
             }

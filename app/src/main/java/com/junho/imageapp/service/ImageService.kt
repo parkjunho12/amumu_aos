@@ -57,6 +57,7 @@ class ImageService: LifecycleService(), LifecycleObserver {
         CoroutineScope(Dispatchers.IO).launch {
             imageList = (mainRepository.getAllImageList() as ArrayList<ImageData>?)!!
         }
+        builder = NotificationCompat.Builder(this, CHANNEL_ID)
         super.onCreate()
     }
 
@@ -64,7 +65,7 @@ class ImageService: LifecycleService(), LifecycleObserver {
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         super.onStartCommand(intent, flags, startId)
         mContext = this
-        imageList = intent!!.getSerializableExtra("imageDataList") as ArrayList<ImageData>
+//        imageList = intent!!.getSerializableExtra("imageDataList") as ArrayList<ImageData>
         remoteViews = RemoteViews(packageName, R.layout.noti_view)
 
         alarmMgr = getSystemService(Context.ALARM_SERVICE) as AlarmManager
@@ -74,7 +75,7 @@ class ImageService: LifecycleService(), LifecycleObserver {
         // Set the alarm to start at 8:30 a.m.
         val calendar: Calendar = Calendar.getInstance().apply {
             timeInMillis = System.currentTimeMillis()
-            set(Calendar.MINUTE, get(Calendar.MINUTE) + 15)
+            set(Calendar.MINUTE, get(Calendar.MINUTE) + 1)
 
         }
 
@@ -83,7 +84,7 @@ class ImageService: LifecycleService(), LifecycleObserver {
         alarmMgr?.setRepeating(
             AlarmManager.RTC,
             calendar.timeInMillis ,
-            INTERVAL_FIFTEEN_MINUTES,
+            INTERVAL_FIFTEEN_MINUTES / 15,
             alarmIntent
         )
 
@@ -103,26 +104,41 @@ class ImageService: LifecycleService(), LifecycleObserver {
     }
 
     private fun makeRemoteViews() {
-        if (imageList.size >= 3) {
-            var imageQueue: HashSet<Int> = java.util.HashSet()
-            while (true) {
-                imageQueue =  makeRandThreeNum(imageList.size, imageQueue)
-                if (imageQueue.size == 3) break
-            }
+        CoroutineScope(Dispatchers.IO).launch {
+            imageList = (mainRepository.getAllImageList() as ArrayList<ImageData>?)!!
+            withContext(Dispatchers.Main) {
+                if (imageList.size >= 3) {
+                    var imageQueue: HashSet<Int> = java.util.HashSet()
+                    while (true) {
+                        imageQueue = makeRandThreeNum(imageList.size, imageQueue)
+                        if (imageQueue.size == 3) break
+                    }
 
-            val imageArray = imageQueue.toArray()
-            for (image in imageArray) {
-                Log.d("image", image.toString())
-            }
-            remoteViews.setImageViewUri(R.id.first_image, Uri.parse(imageList[imageArray[0] as Int].imageUri))
-            remoteViews.setImageViewUri(R.id.second_image, Uri.parse(imageList[imageArray[1] as Int].imageUri))
-            remoteViews.setImageViewUri(R.id.third_image, Uri.parse(imageList[imageArray[2] as Int].imageUri))
+                    val imageArray = imageQueue.toArray()
+                    for (image in imageArray) {
+                        Log.d("image", image.toString())
+                    }
+                    remoteViews.setImageViewUri(
+                        R.id.first_image,
+                        Uri.parse(imageList[imageArray[0] as Int].imageUri)
+                    )
+                    remoteViews.setImageViewUri(
+                        R.id.second_image,
+                        Uri.parse(imageList[imageArray[1] as Int].imageUri)
+                    )
+                    remoteViews.setImageViewUri(
+                        R.id.third_image,
+                        Uri.parse(imageList[imageArray[2] as Int].imageUri)
+                    )
 
-        } else if (imageList.size == 2){
-            remoteViews.setImageViewUri(R.id.first_image, Uri.parse(imageList[0].imageUri))
-            remoteViews.setImageViewUri(R.id.third_image, Uri.parse(imageList[1].imageUri))
-        } else if (imageList.size == 1) {
-            remoteViews.setImageViewUri(R.id.second_image, Uri.parse(imageList[0].imageUri))
+                } else if (imageList.size == 2) {
+                    remoteViews.setImageViewUri(R.id.first_image, Uri.parse(imageList[0].imageUri))
+                    remoteViews.setImageViewUri(R.id.third_image, Uri.parse(imageList[1].imageUri))
+                } else if (imageList.size == 1) {
+                    remoteViews.setImageViewUri(R.id.second_image, Uri.parse(imageList[0].imageUri))
+                }
+                widgetSync()
+            }
         }
 
     }
@@ -135,11 +151,12 @@ class ImageService: LifecycleService(), LifecycleObserver {
     }
 
     private fun makeWidget() {
-        val appName = "Image 서비스"
         makeRemoteViews()
-        if (Build.VERSION.SDK_INT >= 26) {
+    }
 
-            builder = NotificationCompat.Builder(this, CHANNEL_ID)
+    private suspend fun widgetSync() {
+        val appName = "Image 서비스"
+        if (Build.VERSION.SDK_INT >= 26) {
 
             val notificationIntent = Intent(this, MainActivity::class.java)
                 .apply {
