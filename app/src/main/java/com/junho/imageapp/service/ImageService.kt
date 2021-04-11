@@ -140,7 +140,6 @@ class ImageService: LifecycleService(), LifecycleObserver {
                 widgetSync()
             }
         }
-
     }
 
     fun refreshImage() {
