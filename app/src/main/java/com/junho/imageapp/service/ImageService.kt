@@ -75,7 +75,7 @@ class ImageService: LifecycleService(), LifecycleObserver {
         // Set the alarm to start at 8:30 a.m.
         val calendar: Calendar = Calendar.getInstance().apply {
             timeInMillis = System.currentTimeMillis()
-            set(Calendar.MINUTE, get(Calendar.MINUTE) + 1)
+            set(Calendar.MINUTE, get(Calendar.MINUTE) + 15)
 
         }
 
@@ -84,7 +84,7 @@ class ImageService: LifecycleService(), LifecycleObserver {
         alarmMgr?.setRepeating(
             AlarmManager.RTC,
             calendar.timeInMillis ,
-            INTERVAL_FIFTEEN_MINUTES / 15,
+            INTERVAL_FIFTEEN_MINUTES,
             alarmIntent
         )
 
@@ -144,9 +144,13 @@ class ImageService: LifecycleService(), LifecycleObserver {
 
     fun refreshImage() {
         makeRemoteViews()
-        val notificationManager =
-            getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-        notificationManager.notify(1, builder.build())
+        try {
+//            val notificationManager =
+//                getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+//            notificationManager.notify(1, builder.build())
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 
     private fun makeWidget() {
