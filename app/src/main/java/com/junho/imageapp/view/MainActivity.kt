@@ -77,6 +77,8 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
     private lateinit var mAdapter: MainAdapter
     private lateinit var mAdView: AdView
     private lateinit var imageAddText: TextView
+    private lateinit var navHowTo: LinearLayout
+    private lateinit var navSetting: LinearLayout
     private var initialLayoutComplete = false
     @SuppressLint("UseSwitchCompatOrMaterialCode")
     private lateinit var switchNoti: Switch
@@ -120,6 +122,8 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
             }
         }
         imageAddText = findViewById(R.id.add_image_ment)
+        navHowTo = findViewById(R.id.nav_lost_guide)
+        navSetting = findViewById(R.id.nav_setting)
     }
 
 
@@ -192,9 +196,18 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
                 drawerLayout.openDrawer(Gravity.RIGHT)
             }
         }
+        val packageInfo = packageManager.getPackageInfo(packageName, 0).versionName
+        val appverText = findViewById<TextView>(R.id.appVersion)
+        appverText.text = packageInfo
         val addButton = findViewById<Button>(R.id.btn_add_image)
         addButton.setOnClickListener {
             pickFromGallery()
+        }
+        navHowTo.setOnClickListener {
+            startActivity(Intent(this, InfoActivity::class.java))
+        }
+        navSetting.setOnClickListener {
+            startActivity(Intent(this, SettingActivity::class.java))
         }
         switchNoti.isChecked = ImageService.isInit
         switchNoti.setOnCheckedChangeListener { _, isChecked ->

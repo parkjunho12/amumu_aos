@@ -3,6 +3,7 @@
     <string name="app_name">랜덤 상태창 이미지</string>
     <string name="support">고객지원</string>
     <string name="how">사용방법</string>
+    <string name="setting">설정</string>
     <string name="app_version">앱 버젼</string>
     <string name="switch_info">상단 상태바에 나의 이미지를 노출시키기</string>
     <string name="add_image">사진을 추가해 주세요.</string>

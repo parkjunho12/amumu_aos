@@ -7,5 +7,229 @@
         android:layout_height="match_parent"
         tools:context=".view.SettingActivity">
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="80dp"
+                    android:layout_marginTop="10dp"
+                    android:padding="15dp"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/allAgree"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginRight="20dp">
+
+                <CheckBox
+                    android:id="@+id/allAgreeCheck"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:clickable="false"
+                    android:gravity="center_vertical"
+                    android:includeFontPadding="false"
+                    android:paddingStart="10dp"
+                    android:paddingLeft="15dp"
+                    android:paddingEnd="10dp"
+                    android:paddingRight="10dp"
+                    android:scaleX="0.82"
+                    android:scaleY="0.82"
+                    android:textColor="@color/black"
+                    android:textSize="20sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="25dp"
+                android:layout_marginRight="30dp">
+
+                <CheckBox
+                    android:id="@+id/useAgree"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.9"
+                    android:paddingStart="10dp"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:scaleX="0.8"
+                    android:scaleY="0.8"
+                    android:textSize="20sp" />
+
+                <ImageButton
+                    android:id="@+id/useDoc"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="15dp"
+                    android:layout_weight="0.1"
+                    android:scaleX="0.8"
+                    android:scaleY="0.8" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="30dp">
+
+                <CheckBox
+                    android:id="@+id/personInfoAgree"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.9"
+                    android:includeFontPadding="false"
+                    android:paddingStart="10dp"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:scaleX="0.8"
+                    android:scaleY="0.8"
+                    android:textSize="20sp" />
+
+                <ImageButton
+                    android:id="@+id/personInfoDoc"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="15dp"
+                    android:layout_weight="0.1"
+                    android:scaleX="0.8"
+                    android:scaleY="0.8" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/thirdInfoLin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="30dp">
+
+                <CheckBox
+                    android:id="@+id/thirdInfoAgree"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.9"
+                    android:includeFontPadding="false"
+                    android:paddingStart="10dp"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:scaleX="0.8"
+                    android:scaleY="0.8"
+                    android:textSize="20sp" />
+
+                <ImageButton
+                    android:id="@+id/thirdInfoDoc"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="15dp"
+                    android:layout_weight="0.1"
+                    android:scaleX="0.8"
+                    android:scaleY="0.8" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/ktLin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="30dp"
+                >
+
+                <CheckBox
+                    android:id="@+id/ktCheckBox"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.9"
+                    android:includeFontPadding="false"
+                    android:paddingStart="10dp"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:scaleX="0.8"
+                    android:scaleY="0.8"
+                    android:textSize="20sp" />
+
+                <ImageButton
+                    android:id="@+id/ktPerDoc"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="15dp"
+                    android:layout_weight="0.1"
+                    android:scaleX="0.8"
+                    android:scaleY="0.8" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="30dp">
+
+                <CheckBox
+                    android:id="@+id/eventAgree"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.9"
+                    android:includeFontPadding="false"
+                    android:paddingStart="10dp"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:scaleX="0.8"
+                    android:scaleY="0.8"
+
+                    android:textSize="20sp" />
+
+                <ImageButton
+                    android:id="@+id/eventDoc"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="15dp"
+                    android:layout_weight="0.1"
+                    android:scaleX="0.8"
+                    android:scaleY="0.8" />
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="15dp"
+            android:gravity="center"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toTopOf="@id/signUpAgree" />
+
+        <Button
+            android:id="@+id/signUpAgree"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:includeFontPadding="false"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

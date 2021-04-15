@@ -71,6 +71,28 @@
                 android:layout_weight="0.1"/>
 
         </LinearLayout>
+        <LinearLayout
+            android:id="@+id/nav_setting"
+            android:paddingTop="26dp"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.9"
+                android:fontFamily="@font/notobold"
+                android:includeFontPadding="false"
+                android:textSize="14sp"
+                android:textColor="@color/black"
+                android:text="@string/setting"/>
+            <ImageView
+                android:src="@drawable/ic_baseline_navigate_next_24"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.1"/>
+
+        </LinearLayout>
 
 
     </LinearLayout>
@@ -106,7 +128,7 @@
                 android:fontFamily="@font/notobold"
                 android:includeFontPadding="false"
                 android:textSize="11sp"
-                android:text="21.02.28.01"
+                android:text="21.14.28.01"
                 android:textColor="@color/black"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
