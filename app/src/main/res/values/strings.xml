@@ -5,4 +5,6 @@
     <string name="app_version">앱 버젼</string>
     <string name="switch_info">상단 상태바에 나의 이미지를 노출시키기</string>
     <string name="add_image">사진을 추가해 주세요.</string>
+    <string name="perm_deny_ment">필수 권한 허용을 해주시기 바랍니다.</string>
+    <string name="add_image_center_ment">하단 버튼을 이용하여 사진을 추가해주세요...</string>
 </resources>

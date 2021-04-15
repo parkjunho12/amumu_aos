@@ -46,6 +46,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
     </ScrollView>
+    <TextView
+        android:id="@+id/add_image_ment"
+        android:text="@string/add_image_center_ment"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
     <Button
         android:background="@drawable/plus_button_rounded"
         app:layout_constraintBottom_toTopOf="@id/ad_view_container"

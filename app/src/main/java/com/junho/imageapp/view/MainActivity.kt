@@ -11,10 +11,7 @@ import android.os.IBinder
 import android.util.DisplayMetrics
 import android.view.Gravity
 import android.view.View
-import android.widget.Button
-import android.widget.FrameLayout
-import android.widget.ImageButton
-import android.widget.Switch
+import android.widget.*
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.drawerlayout.widget.DrawerLayout
@@ -79,6 +76,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
     private lateinit var gridLayoutManager: GridLayoutManager
     private lateinit var mAdapter: MainAdapter
     private lateinit var mAdView: AdView
+    private lateinit var imageAddText: TextView
     private var initialLayoutComplete = false
     @SuppressLint("UseSwitchCompatOrMaterialCode")
     private lateinit var switchNoti: Switch
@@ -94,14 +92,6 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
                 val imageData= ImageData(imageUri = selectedImage.toString())
                 viewModel.insertImageData(imageData)
             }
-        }
-    }
-    private val requestPermission = registerForActivityResult(ActivityResultContracts.RequestPermission()) {
-        isGranted ->
-        if (isGranted) {
-
-        } else {
-
         }
     }
 
@@ -129,6 +119,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
                 loadBanner()
             }
         }
+        imageAddText = findViewById(R.id.add_image_ment)
     }
 
 
@@ -151,6 +142,11 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
     override fun initDataBinding() {
         mAdapter = MainAdapter(this@MainActivity, viewModel.imageDataList.value!!)
         viewModel.imageDataList.observe(this, {
+            if (it.isEmpty()) {
+                imageAddText.visibility = View.VISIBLE
+            } else {
+                imageAddText.visibility = View.GONE
+            }
             mAdapter = MainAdapter(this@MainActivity, it)
             mAdapter.itemClick = object : MainAdapter.ItemClick {
                 override fun onClick(view: View, position: Int) {
@@ -174,7 +170,6 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
 
     override fun initAfterBinding() {
         setNavigationDrawer()
-        requestPermission.launch(Manifest.permission.READ_EXTERNAL_STORAGE)
 
     }
 
@@ -227,6 +222,11 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
                 }
             }
         }
+    }
+
+    override fun onBackPressed() {
+        finishAffinity()
+        super.onBackPressed()
     }
 
     companion object {

@@ -4,6 +4,7 @@ import android.content.Context
 import com.junho.imageapp.database.ImageDao
 import com.junho.imageapp.repos.MainRepository
 import com.junho.imageapp.repos.MainRepositoryImpl
+import com.junho.imageapp.viewmodel.InfoViewModel
 import com.junho.imageapp.viewmodel.MainViewModel
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
@@ -12,6 +13,9 @@ import org.koin.dsl.module
 val ViewModelModule = module {
     viewModel {
         MainViewModel(get())
+    }
+    viewModel {
+        InfoViewModel()
     }
 }
 
@@ -23,4 +27,5 @@ val dataModule = module {
     factory <MainRepository>{
         proviceMaindRepository(androidContext(), get())
     }
+
 }

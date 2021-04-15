@@ -6,4 +6,6 @@
     <string name="app_version">App Version</string>
     <string name="switch_info">Expose my image on the top status bar</string>
     <string name="add_image">Please add a picture.</string>
+    <string name="perm_deny_ment">Please admit Permissions!</string>
+    <string name="add_image_center_ment">Please add a pictures with bottom button!</string>
 </resources>
