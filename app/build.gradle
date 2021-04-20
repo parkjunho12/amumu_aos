@@ -12,8 +12,8 @@ android {
         applicationId "com.junho.imageapp"
         minSdkVersion 18
         targetSdkVersion 30
-        versionCode 21041501
-        versionName "21.04.15.01"
+        versionCode 21042001
+        versionName "21.04.20.01"
         multiDexEnabled true
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"

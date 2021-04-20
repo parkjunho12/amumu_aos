@@ -38,7 +38,7 @@ import kotlin.collections.HashSet
 
 @KoinApiExtension
 class ImageService: LifecycleService(), LifecycleObserver {
-    private lateinit var remoteViews: RemoteViews
+    private var remoteViews: RemoteViews? = null
     private lateinit var builder: NotificationCompat.Builder
     lateinit var imageList: ArrayList<ImageData>
     private var alarmMgr: AlarmManager? = null
@@ -107,6 +107,9 @@ class ImageService: LifecycleService(), LifecycleObserver {
         CoroutineScope(Dispatchers.IO).launch {
             imageList = (mainRepository.getAllImageList() as ArrayList<ImageData>?)!!
             withContext(Dispatchers.Main) {
+                if (remoteViews == null) {
+                    remoteViews = RemoteViews(packageName, R.layout.noti_view)
+                }
                 if (imageList.size >= 3) {
                     var imageQueue: HashSet<Int> = java.util.HashSet()
                     while (true) {
@@ -118,24 +121,25 @@ class ImageService: LifecycleService(), LifecycleObserver {
                     for (image in imageArray) {
                         Log.d("image", image.toString())
                     }
-                    remoteViews.setImageViewUri(
+
+                    remoteViews!!.setImageViewUri(
                         R.id.first_image,
                         Uri.parse(imageList[imageArray[0] as Int].imageUri)
                     )
-                    remoteViews.setImageViewUri(
+                    remoteViews!!.setImageViewUri(
                         R.id.second_image,
                         Uri.parse(imageList[imageArray[1] as Int].imageUri)
                     )
-                    remoteViews.setImageViewUri(
+                    remoteViews!!.setImageViewUri(
                         R.id.third_image,
                         Uri.parse(imageList[imageArray[2] as Int].imageUri)
                     )
 
                 } else if (imageList.size == 2) {
-                    remoteViews.setImageViewUri(R.id.first_image, Uri.parse(imageList[0].imageUri))
-                    remoteViews.setImageViewUri(R.id.third_image, Uri.parse(imageList[1].imageUri))
+                    remoteViews!!.setImageViewUri(R.id.first_image, Uri.parse(imageList[0].imageUri))
+                    remoteViews!!.setImageViewUri(R.id.third_image, Uri.parse(imageList[1].imageUri))
                 } else if (imageList.size == 1) {
-                    remoteViews.setImageViewUri(R.id.second_image, Uri.parse(imageList[0].imageUri))
+                    remoteViews!!.setImageViewUri(R.id.second_image, Uri.parse(imageList[0].imageUri))
                 }
                 widgetSync()
             }
