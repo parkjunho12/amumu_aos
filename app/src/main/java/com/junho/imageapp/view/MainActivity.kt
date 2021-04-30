@@ -154,7 +154,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
             mAdapter.itemClick = object : MainAdapter.ItemClick {
                 override fun onClick(view: View, position: Int) {
                     startActivity(Intent(this@MainActivity, InfoActivity::class.java).apply {
-                        putExtra("imageData", it[position].imageUri)
+                        putExtra("imageData", it[position])
                     })
                 }
 
@@ -249,6 +249,11 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
             }
             GlobalAppication.prefs.isSwitchOn = isChecked
         }
+    }
+
+    override fun onResume() {
+        viewModel.fetchDataList()
+        super.onResume()
     }
 
     override fun onBackPressed() {

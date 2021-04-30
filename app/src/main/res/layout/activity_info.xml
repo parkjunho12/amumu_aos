@@ -24,7 +24,8 @@
             </LinearLayout>
 
             <ImageView
-                android:layout_marginTop="10dp"
+                android:layout_marginBottom="60dp"
+                android:layout_marginTop="20dp"
                 android:id="@+id/img_detail"
                 android:layout_gravity="center"
                 android:adjustViewBounds="true"
@@ -32,6 +33,15 @@
                 android:layout_height="0dp"
                 android:layout_weight="1"/>
         </LinearLayout>
+        <Button
+            android:background="@drawable/plus_button_rounded"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:textColor="@color/white"
+            android:fontFamily="@font/notobold"
+            android:id="@+id/btn_delete_info"
+            android:text="@string/delete"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
