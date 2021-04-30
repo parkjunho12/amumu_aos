@@ -105,7 +105,6 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
         switchNoti = findViewById(R.id.switch_noti)
         mRecyclerView.layoutManager = gridLayoutManager
         MobileAds.initialize(this) {}
-
         MobileAds.setRequestConfiguration(
             RequestConfiguration.Builder()
                 .setTestDeviceIds(listOf("ABCDEF012345"))
@@ -154,7 +153,9 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
             mAdapter = MainAdapter(this@MainActivity, it)
             mAdapter.itemClick = object : MainAdapter.ItemClick {
                 override fun onClick(view: View, position: Int) {
-
+                    startActivity(Intent(this@MainActivity, InfoActivity::class.java).apply {
+                        putExtra("imageData", it[position].imageUri)
+                    })
                 }
 
                 override fun onLongClick(view: View, position: Int): Boolean {
@@ -209,7 +210,19 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
         navSetting.setOnClickListener {
             startActivity(Intent(this, SettingActivity::class.java))
         }
-        switchNoti.isChecked = ImageService.isInit
+        switchNoti.isChecked = GlobalAppication.prefs.isSwitchOn
+        if (GlobalAppication.prefs.isSwitchOn) {
+            val imageservice = Intent(this, GlobalAppication.imageService::class.java)
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                if (!ImageService.isInit) {
+                    startForegroundService(imageservice)
+                }
+            } else {
+                if (!ImageService.isInit) {
+                    startService(imageservice)
+                }
+            }
+        }
         switchNoti.setOnCheckedChangeListener { _, isChecked ->
             val imageservice = Intent(this, GlobalAppication.imageService::class.java)
             imageservice.putExtra("imageDataList", viewModel.imageDataList.value)
@@ -234,6 +247,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
                     stopService(imageservice)
                 }
             }
+            GlobalAppication.prefs.isSwitchOn = isChecked
         }
     }
 

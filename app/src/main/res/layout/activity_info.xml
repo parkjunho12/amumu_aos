@@ -6,6 +6,32 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".view.InfoActivity">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <LinearLayout
+                android:orientation="horizontal"
+                android:background="@color/colorPrimary"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <ImageButton
+                    android:src="@drawable/ic_baseline_arrow_back_24"
+                    android:backgroundTint="@color/colorPrimary"
+                    android:id="@+id/back_button_detail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"/>
+            </LinearLayout>
+
+            <ImageView
+                android:layout_marginTop="10dp"
+                android:id="@+id/img_detail"
+                android:layout_gravity="center"
+                android:adjustViewBounds="true"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"/>
+        </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

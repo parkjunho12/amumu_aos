@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "262113560293",
+    "project_id": "imageapp-aae85",
+    "storage_bucket": "imageapp-aae85.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:262113560293:android:1c645bce31de01f4f1f60c",
+        "android_client_info": {
+          "package_name": "com.junho.imageapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "262113560293-rr2t65e2kjajs17clolnjeff8hg51piq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCNvDh0EWHEP9FWbAOa96y8pnDpJGIOeJI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "262113560293-rr2t65e2kjajs17clolnjeff8hg51piq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
